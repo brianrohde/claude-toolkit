@@ -11,8 +11,8 @@ version: 0.1.0
 Audit synchronization status between the project's local Claude Code components and the canonical toolkit. Surface stale copies, project-local improvements that should be promoted, and divergences that need manual reconciliation.
 
 This skill is **read-only** -- it never writes. It tells you what action to take. The follow-up actions are:
-- `/claude-toolkit-update <name>` -- pull toolkit version into project (project copy was stale).
-- `/skill-update-workflow <name>` -- promote project edits back to toolkit (toolkit was stale).
+- `/claude-toolkit-pull <name>` -- pull toolkit version into project (project copy was stale).
+- `/claude-toolkit-push <name>` -- promote project edits back to toolkit (toolkit was stale).
 - Manual reconciliation -- both sides edited; merge required.
 
 ## Trigger
@@ -32,7 +32,7 @@ For each subtree (`skills/`, `hooks/`, `rules/`):
 - List components in `<project>/.claude/<type>/`.
 - Intersection = the overlap set to compare.
 
-Skip components present only on one side (those are handled by `/claude-toolkit-update` for toolkit-only or `/claude-toolkit-new-skill` for project-only -- mention them in a separate "Project-only" / "Toolkit-only" appendix).
+Skip components present only on one side (those are handled by `/claude-toolkit-pull` for toolkit-only or `/claude-toolkit-push` for project-only -- mention them in a separate "Project-only" / "Toolkit-only" appendix).
 
 ### Step 3: Per-component comparison
 For each overlapping component, compute three signals:
@@ -54,11 +54,11 @@ For each component, also report:
 - skill-a, skill-b, ...    [no action needed]
 
 === TOOLKIT_NEWER (n) -- project is stale ===
-- skill-c -- toolkit ahead by 2 commits, last toolkit edit YYYY-MM-DD -- run /claude-toolkit-update skill-c
+- skill-c -- toolkit ahead by 2 commits, last toolkit edit YYYY-MM-DD -- run /claude-toolkit-pull skill-c
 - ...
 
 === PROJECT_NEWER (n) -- improvements waiting to promote ===
-- skill-d -- project ahead, last project edit YYYY-MM-DD -- run /skill-update-workflow skill-d
+- skill-d -- project ahead, last project edit YYYY-MM-DD -- run /claude-toolkit-push skill-d
 - ...
 
 === DIVERGED (n) -- manual reconciliation needed ===
@@ -69,10 +69,10 @@ For each component, also report:
 - skill-f references /old-name (not in toolkit) -- canonical is /new-name
 
 === APPENDIX: Project-only ===
-- skill-x -- consider /claude-toolkit-new-skill skill-x
+- skill-x -- consider /claude-toolkit-push skill-x
 
 === APPENDIX: Toolkit-only ===
-- skill-y -- consider /claude-toolkit-update skill-y
+- skill-y -- consider /claude-toolkit-pull skill-y
 ```
 
 ### Step 5: No mutations

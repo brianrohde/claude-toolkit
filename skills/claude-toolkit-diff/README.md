@@ -16,11 +16,11 @@ Invoke as `/claude-toolkit-diff`.
 
 ## Sister skills
 
-- `/claude-toolkit-update` -- pull a toolkit component into a project (library -> project).
+- `/claude-toolkit-pull` -- pull a toolkit component into a project (library -> project).
 - `/claude-toolkit-suggestion` -- discover what's available in the toolkit.
 - `/claude-toolkit-diff` -- check sync status across all overlapping components.
-- `/claude-toolkit-new-skill` -- promote a project skill TO the toolkit (first-time).
-- `/skill-update-workflow` -- update an EXISTING toolkit skill from project edits.
+- `/claude-toolkit-push` -- promote a project skill TO the toolkit (first-time).
+- `/claude-toolkit-push` -- update an EXISTING toolkit skill from project edits.
 
 ## Provenance
 

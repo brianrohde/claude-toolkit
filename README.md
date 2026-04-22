@@ -67,9 +67,9 @@ Don't reach for `experimental` components in a new project without reviewing the
 | [branch_guard](hooks/branch_guard/) | hook | beta | UserPromptSubmit hook: suggests a feature branch when on `main`, confirms branch otherwise. |
 | [check_file_edit](hooks/check_file_edit/) | hook | beta | PreToolUse hook: blocks Edit/Write on OneDrive .py files (EEXIST/byte-corruption guard) and any .env file. |
 | [claude-toolkit-diff](skills/claude-toolkit-diff/) | skill | beta | Compare overlapping components between project and toolkit; report which side is newer/diverged. Read-only. |
-| [claude-toolkit-new-skill](skills/claude-toolkit-new-skill/) | skill | beta | First-time promotion of a project skill to the toolkit; scrubs project-specific refs, commits, pushes. |
+| [claude-toolkit-push](skills/claude-toolkit-push/) | skill | beta | Promote project component to toolkit (auto-detects new vs update; diffs and confirms before overwrite). |
 | [claude-toolkit-suggestion](skills/claude-toolkit-suggestion/) | skill | beta | Recommend toolkit components that fit the current project's tech stack. Read-only. |
-| [claude-toolkit-update](skills/claude-toolkit-update/) | skill | beta | Pull canonical version of a toolkit component into a project; opposite of claude-toolkit-new-skill. |
+| [claude-toolkit-pull](skills/claude-toolkit-pull/) | skill | beta | Pull canonical version of a toolkit component into a project; opposite of claude-toolkit-push. |
 | [deploy-to-vercel](skills/deploy-to-vercel/) | skill | beta | Deploy applications and websites to Vercel via CLI. |
 | [docs-update-all](skills/docs-update-all/) | skill | beta | Update all documentation in a session sweep. |
 | [errors-log](skills/errors-log/) | skill | beta | Scan session for tool failures and append to `.claude/logs/tooling-issues.jsonl`. |
@@ -80,7 +80,6 @@ Don't reach for `experimental` components in a new project without reviewing the
 | [plan-update-all](skills/plan-update-all/) | skill | beta | Log and finalize completed plans (relocate, rename, write outcome file). |
 | [react-testing-patterns](skills/react-testing-patterns/) | skill | beta | React testing patterns and best practices. |
 | [root-directory-hygiene](skills/root-directory-hygiene/) | skill | beta | Keep the repo root tidy; enforce documentation folder placement. |
-| [skill-update-workflow](skills/skill-update-workflow/) | skill | beta | Promote project-local skill changes back to the toolkit (diff + cross-ref validator). |
 | [standup-finalize](skills/standup-finalize/) | skill | beta | Clean and finalize the standup draft for supervisor delivery. |
 | [standup-init](skills/standup-init/) | skill | beta | Initialize a new standup draft for the next supervisor meeting. |
 | [standup-log](skills/standup-log/) | skill | beta | Append a timestamped entry to the active standup draft. |

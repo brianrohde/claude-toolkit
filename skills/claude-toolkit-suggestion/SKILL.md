@@ -1,6 +1,6 @@
 ---
 name: claude-toolkit-suggestion
-description: This skill should be used when the user asks "what toolkit skills should I install", "/claude-toolkit-suggestion", "find toolkit skills for this project", or names a keyword (e.g., "/claude-toolkit-suggestion testing"). Scans the claude-toolkit library and recommends which components fit the current project based on its tech stack, file types, existing skills, and an optional keyword. Recommendation only -- does NOT install. Use /claude-toolkit-update to install a recommended skill.
+description: This skill should be used when the user asks "what toolkit skills should I install", "/claude-toolkit-suggestion", "find toolkit skills for this project", or names a keyword (e.g., "/claude-toolkit-suggestion testing"). Scans the claude-toolkit library and recommends which components fit the current project based on its tech stack, file types, existing skills, and an optional keyword. Recommendation only -- does NOT install. Use /claude-toolkit-pull to install a recommended skill.
 version: 0.1.0
 ---
 
@@ -10,7 +10,7 @@ version: 0.1.0
 
 Help the user discover which toolkit components are relevant to the current project. The toolkit is a curated library; this skill is the "browse and recommend" surface.
 
-This skill **does not install** anything. It only suggests. To install a suggestion, run `/claude-toolkit-update <name>` or `/claude-toolkit-new-skill <name>` (depending on direction).
+This skill **does not install** anything. It only suggests. To install a suggestion, run `/claude-toolkit-pull <name>` or `/claude-toolkit-push <name>` (depending on direction).
 
 ## Trigger
 
@@ -24,7 +24,7 @@ Examples:
 ## Algorithm
 
 ### Step 1: Locate the toolkit
-Same resolution as `/claude-toolkit-update`:
+Same resolution as `/claude-toolkit-pull`:
 1. `$CLAUDE_TOOLKIT` env var.
 2. `~/claude-toolkit/`.
 3. `~/.claude-toolkit/`.
@@ -54,7 +54,7 @@ Output as three buckets:
 
 ```
 === Strongly recommended (hard matches) ===
-- skill-name -- one-line reason -- install: /claude-toolkit-update skill-name
+- skill-name -- one-line reason -- install: /claude-toolkit-pull skill-name
 
 === Worth considering (soft matches) ===
 - ...
@@ -67,7 +67,7 @@ Cap each bucket at ~10 entries. If a bucket is empty, omit it.
 
 ### Step 5: Suggest next action
 End the output with a one-line action recommendation:
-- "Install the strongly-recommended skills with `/claude-toolkit-update <name>` (one at a time)."
+- "Install the strongly-recommended skills with `/claude-toolkit-pull <name>` (one at a time)."
 - Or, if many overlaps: "Run `/claude-toolkit-diff` first to see which installed skills are stale."
 
 ## Output

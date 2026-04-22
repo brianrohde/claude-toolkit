@@ -1,28 +1,28 @@
 ---
-name: claude-toolkit-update
-description: This skill should be used when the user asks to "update toolkit skill", "pull latest from toolkit", "refresh toolkit copy", "/claude-toolkit-update", or names a specific toolkit skill (e.g., "/claude-toolkit-update git-using-worktrees"). Pulls the canonical version of a skill (or hook/rule) from the claude-toolkit library into the current project, overwriting the project's local copy. The opposite direction of /claude-toolkit-new-skill.
+name: claude-toolkit-pull
+description: This skill should be used when the user asks to "update toolkit skill", "pull latest from toolkit", "refresh toolkit copy", "/claude-toolkit-pull", or names a specific toolkit skill (e.g., "/claude-toolkit-pull git-using-worktrees"). Pulls the canonical version of a skill (or hook/rule) from the claude-toolkit library into the current project, overwriting the project's local copy. The opposite direction of /claude-toolkit-push.
 version: 0.1.0
 ---
 
-# claude-toolkit-update
+# claude-toolkit-pull (formerly claude-toolkit-pull)
 
 ## Purpose
 
-Sync a project's local copy of a toolkit component with the canonical version in `claude-toolkit/`. Use when:
+Pull (sync down) a project's local copy of a toolkit component with the canonical version in `claude-toolkit/`. Use when:
 - The toolkit version has been improved and the project should adopt the change.
 - The project's copy was accidentally modified and you want to reset it.
 - A new project hasn't yet pulled the component at all.
 
-This is the **library -> project** direction. For the reverse, see `/claude-toolkit-new-skill` (first-time promotion) or `/skill-update-workflow` (diff-and-promote existing).
+This is the **library -> project** direction. For the reverse, see `/claude-toolkit-push` (first-time promotion) or `/claude-toolkit-push` (diff-and-promote existing).
 
 ## Trigger
 
-`/claude-toolkit-update [optional component-name]`
+`/claude-toolkit-pull [optional component-name]`
 
 Examples:
-- `/claude-toolkit-update` -> ask the user which component to update; offer a list of project-installed components.
-- `/claude-toolkit-update git-using-worktrees` -> update only that skill.
-- `/claude-toolkit-update branch_guard` -> update the hook.
+- `/claude-toolkit-pull` -> ask the user which component to update; offer a list of project-installed components.
+- `/claude-toolkit-pull git-using-worktrees` -> update only that skill.
+- `/claude-toolkit-pull branch_guard` -> update the hook.
 
 ## Algorithm
 
@@ -75,6 +75,6 @@ Report:
 ## Failure modes
 
 - **Toolkit not found**: ask user, don't guess.
-- **Component not in toolkit**: suggest `/claude-toolkit-suggestion` and `/claude-toolkit-new-skill`.
-- **Project copy heavily diverged**: surface the divergence; recommend running `/skill-update-workflow` first to promote any general improvements before overwriting.
+- **Component not in toolkit**: suggest `/claude-toolkit-suggestion` and `/claude-toolkit-push`.
+- **Project copy heavily diverged**: surface the divergence; recommend running `/claude-toolkit-push` first to promote any general improvements before overwriting.
 - **Hook update without settings.json change**: warn the user that the snippet may need merging.
