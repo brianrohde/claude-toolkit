@@ -21,4 +21,17 @@ Skills can live globally (`~/.claude/skills/`) or per-project (`<project>/.claud
 ## Notes
 
 - See memory entry `claude_code_skill_architecture.md`: `.agents/skills/` are parallelizable; `.claude/skills/` are synchronous.
-- Existing global skills are prefixed `G-S-*` in `~/.claude/skills/`. Library copies should drop the prefix and use plain names — the prefix is a runtime location convention, not part of the skill itself.
+- Toolkit skills use plain names. The `G-S-*` prefix is reserved for the two genuinely global skills (`g-s-skill-creator`, `g-s-find-skills`) that remain in `~/.claude/skills/` for cross-project meta-tooling.
+
+## Available skills
+
+See the [root README's component index](../README.md#component-index) for the canonical list with descriptions.
+
+Quick categories:
+- **Workspace hygiene**: `workspace-audit`, `workspace-cleanup`, `workspace-enforce`, `root-directory-hygiene`
+- **Git workflow**: `git-commit`, `git-draft-commit`, `git-using-worktrees`, `git-worktree-merge`
+- **Standup**: `standup-init`, `standup-log`, `standup-prep`, `standup-finalize`
+- **Plans + docs**: `plan-update-all`, `docs-update-all`, `errors-log`
+- **Toolkit meta**: `skill-update-workflow`
+- **Testing**: `test-codebase-integrity`, `webapp-testing`, `react-testing-patterns`
+- **Web/dev**: `deploy-to-vercel`, `vercel-cli-with-tokens`, `vercel-composition-patterns`, `vercel-react-best-practices`, `vercel-react-native-skills`, `vercel-react-view-transitions`, `typescript-advanced-types`, `web-design-guidelines`

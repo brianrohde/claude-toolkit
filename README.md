@@ -16,8 +16,12 @@ claude-toolkit/
 ├── skills/     Reusable skills (SKILL.md + handler scripts)
 ├── rules/      Project-agnostic rule docs (workflow patterns, conventions)
 ├── agents/     Custom agent definitions
+├── plans/      Plan/outcome scaffolding for project use (plan_files/, outcome_files/)
+├── docs/       Toolkit documentation (guides/installing-components.md, etc.)
 └── scripts/    Helpers (promotion diff, install, etc.)
 ```
+
+For step-by-step install instructions, see [docs/guides/installing-components.md](docs/guides/installing-components.md).
 
 Each component lives in its own subfolder containing:
 - The component file(s)
@@ -60,7 +64,43 @@ Don't reach for `experimental` components in a new project without reviewing the
 
 | Component | Type | Tier | Description |
 |---|---|---|---|
-| [branch_guard](hooks/branch_guard/) | hook | beta | UserPromptSubmit hook: suggests a feature branch when on `main`, confirms branch otherwise. Per-project install with relative path. |
+| [branch_guard](hooks/branch_guard/) | hook | beta | UserPromptSubmit hook: suggests a feature branch when on `main`, confirms branch otherwise. |
+| [check_file_edit](hooks/check_file_edit/) | hook | beta | PreToolUse hook: blocks Edit/Write on OneDrive .py files (EEXIST/byte-corruption guard) and any .env file. |
+| [deploy-to-vercel](skills/deploy-to-vercel/) | skill | beta | Deploy applications and websites to Vercel via CLI. |
+| [docs-update-all](skills/docs-update-all/) | skill | beta | Update all documentation in a session sweep. |
+| [errors-log](skills/errors-log/) | skill | beta | Scan session for tool failures and append to `.claude/logs/tooling-issues.jsonl`. |
+| [git-commit](skills/git-commit/) | skill | beta | Execute a git commit from an approved draft message. |
+| [git-draft-commit](skills/git-draft-commit/) | skill | beta | Generate a ready-to-paste git commit message from the current session. |
+| [git-using-worktrees](skills/git-using-worktrees/) | skill | beta | Create a git worktree under `.cc/worktrees/` for isolated parallel sessions. |
+| [git-worktree-merge](skills/git-worktree-merge/) | skill | beta | Review and merge a worktree branch back to main. |
+| [plan-update-all](skills/plan-update-all/) | skill | beta | Log and finalize completed plans (relocate, rename, write outcome file). |
+| [react-testing-patterns](skills/react-testing-patterns/) | skill | beta | React testing patterns and best practices. |
+| [root-directory-hygiene](skills/root-directory-hygiene/) | skill | beta | Keep the repo root tidy; enforce documentation folder placement. |
+| [skill-update-workflow](skills/skill-update-workflow/) | skill | beta | Promote project-local skill changes back to the toolkit (diff + cross-ref validator). |
+| [standup-finalize](skills/standup-finalize/) | skill | beta | Clean and finalize the standup draft for supervisor delivery. |
+| [standup-init](skills/standup-init/) | skill | beta | Initialize a new standup draft for the next supervisor meeting. |
+| [standup-log](skills/standup-log/) | skill | beta | Append a timestamped entry to the active standup draft. |
+| [standup-prep](skills/standup-prep/) | skill | beta | Prepare an outgoing standup from the draft. |
+| [test-codebase-integrity](skills/test-codebase-integrity/) | skill | beta | Run codebase integrity checks (imports, smoke tests, lint). |
+| [typescript-advanced-types](skills/typescript-advanced-types/) | skill | beta | TypeScript advanced type system reference. |
+| [vercel-cli-with-tokens](skills/vercel-cli-with-tokens/) | skill | beta | Vercel CLI with token-based authentication. |
+| [vercel-composition-patterns](skills/vercel-composition-patterns/) | skill | beta | React composition patterns that scale. |
+| [vercel-react-best-practices](skills/vercel-react-best-practices/) | skill | beta | React/Next.js performance optimization guidelines from Vercel Engineering. |
+| [vercel-react-native-skills](skills/vercel-react-native-skills/) | skill | beta | React Native and Expo best practices. |
+| [vercel-react-view-transitions](skills/vercel-react-view-transitions/) | skill | beta | React View Transitions API guide. |
+| [web-design-guidelines](skills/web-design-guidelines/) | skill | beta | Review UI code for Web Interface Guidelines compliance. |
+| [webapp-testing](skills/webapp-testing/) | skill | beta | Test local web apps with Playwright. |
+| [workspace-audit](skills/workspace-audit/) | skill | beta | Read-only repository health auditor (Claude hygiene, dependencies, source quality). |
+| [workspace-cleanup](skills/workspace-cleanup/) | skill | beta | Repository fixer that applies tiered fixes to audit findings. |
+| [workspace-enforce](skills/workspace-enforce/) | skill | beta | CI gate for workspace health; blocks merge on unwaived violations. |
+| [context-token-optimization](rules/context-token-optimization/) | rule | beta | Model tier selection, tool optimization, memory persistence guidance. |
+| [one-off-execution](rules/one-off-execution/) | rule | beta | Trigger phrases execute once unless an interval is specified. |
+| [repository-map-reference](rules/repository-map-reference/) | rule | beta | Auto-loads `docs/repository-map.md` for codebase questions. |
+| [tooling-issues-workflow](rules/tooling-issues-workflow/) | rule | beta | JSONL-as-source-of-truth workflow for `.claude/logs/tooling-issues.jsonl`. |
+| [trigger-branch-strategy](rules/trigger-branch-strategy/) | rule | beta | Branch-strategy trigger phrases and policy reference. |
+| [trigger-docs-workflow](rules/trigger-docs-workflow/) | rule | beta | `/docs-update-all` trigger and update priority order. |
+| [trigger-git-commit-workflow](rules/trigger-git-commit-workflow/) | rule | beta | `/draft_commit` trigger algorithm and commit message format. |
+| [trigger-plan-workflow](rules/trigger-plan-workflow/) | rule | beta | Plan file mirroring + outcome documentation workflow. |
 
 ## Cross-machine sync
 
