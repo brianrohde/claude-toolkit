@@ -19,8 +19,13 @@ For single-file rules, you can skip the subfolder and place `<rule_name>.md` dir
 
 ## Index
 
-_Empty for now._
-
-| Rule | Purpose |
-|---|---|
-| _(none yet)_ | |
+| Rule | Tier | Purpose |
+|---|---|---|
+| [context-token-optimization](context-token-optimization/) | beta | Model tier selection, tool optimization, memory persistence guidance. |
+| [one-off-execution](one-off-execution/) | beta | Trigger phrases execute once unless an interval is specified. |
+| [repository-map-reference](repository-map-reference/) | beta | Auto-loads `docs/repository-map.md` for codebase questions. |
+| [tooling-issues-workflow](tooling-issues-workflow/) | beta | JSONL-as-source-of-truth workflow for `.claude/logs/tooling-issues.jsonl`. |
+| [trigger-branch-strategy](trigger-branch-strategy/) | beta | Branch-strategy trigger phrases and policy reference. |
+| [trigger-docs-workflow](trigger-docs-workflow/) | beta | `/docs-update-all` trigger and update priority order. |
+| [trigger-git-commit-workflow](trigger-git-commit-workflow/) | beta | `/draft_commit` trigger algorithm and commit message format. |
+| [trigger-plan-workflow](trigger-plan-workflow/) | beta | Plan file mirroring + outcome documentation workflow. |
