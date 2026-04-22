@@ -27,6 +27,7 @@ auditing. Install these in any new Claude Code project.
 - workspace-enforce
 - errors-log
 - docs-update-all
+- checkpoint
 
 ## standup
 

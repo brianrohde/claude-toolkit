@@ -32,6 +32,7 @@ Quick categories:
 - **Git workflow**: `git-commit`, `git-draft-commit`, `git-using-worktrees`, `git-worktree-merge`
 - **Standup**: `standup-init`, `standup-log`, `standup-prep`, `standup-finalize`
 - **Plans + docs**: `plan-update-all`, `docs-update-all`, `errors-log`
+- **Session aggregators**: `checkpoint` (runs docs+plan+commit+push in one)
 - **Toolkit meta**: `claude-toolkit-pull`, `claude-toolkit-push`, `claude-toolkit-suggestion`, `claude-toolkit-diff`
 - **Testing**: `test-codebase-integrity`, `webapp-testing`, `react-testing-patterns`
 - **Web/dev**: `deploy-to-vercel`, `vercel-cli-with-tokens`, `vercel-composition-patterns`, `vercel-react-best-practices`, `vercel-react-native-skills`, `vercel-react-view-transitions`, `typescript-advanced-types`, `web-design-guidelines`

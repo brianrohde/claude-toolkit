@@ -66,6 +66,7 @@ Don't reach for `experimental` components in a new project without reviewing the
 |---|---|---|---|
 | [branch_guard](hooks/branch_guard/) | hook | beta | UserPromptSubmit hook: suggests a feature branch when on `main`, confirms branch otherwise. |
 | [check_file_edit](hooks/check_file_edit/) | hook | beta | PreToolUse hook: blocks Edit/Write on OneDrive .py files (EEXIST/byte-corruption guard) and any .env file. |
+| [checkpoint](skills/checkpoint/) | skill | beta | End-of-session aggregator: runs /docs-update-all, /plan-update-all, /git-draft-commit, /git-push in sequence. |
 | [claude-toolkit-diff](skills/claude-toolkit-diff/) | skill | beta | Compare overlapping components between project and toolkit; report which side is newer/diverged. Read-only. |
 | [claude-toolkit-push](skills/claude-toolkit-push/) | skill | beta | Promote project component to toolkit (auto-detects new vs update; diffs and confirms before overwrite). |
 | [claude-toolkit-suggestion](skills/claude-toolkit-suggestion/) | skill | beta | Recommend toolkit components that fit the current project's tech stack. Read-only. |
