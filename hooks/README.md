@@ -32,3 +32,9 @@ Hard-coded absolute paths in **global** settings caused real breakage (see PTA p
 
 - **Per-project (default)**: Register in `<project>/.claude/settings.json`. Only fires for that project. Recommended for most hooks.
 - **Global**: Register in `~/.claude/settings.json`. Fires for *every* session in *any* directory. Use only for genuinely universal behaviors, and prefer scripts that no-op when irrelevant (e.g., check for a marker file before enforcing).
+
+## Available hooks
+
+| Hook | Tier | Purpose |
+|---|---|---|
+| [branch_guard](branch_guard/) | beta | Suggest a feature branch when prompts arrive on `main`; pass through otherwise |

@@ -58,11 +58,9 @@ Don't reach for `experimental` components in a new project without reviewing the
 
 ## Component index
 
-_Empty for now. Add entries as components migrate in._
-
 | Component | Type | Tier | Description |
 |---|---|---|---|
-| _(none yet)_ | | | |
+| [branch_guard](hooks/branch_guard/) | hook | beta | UserPromptSubmit hook: suggests a feature branch when on `main`, confirms branch otherwise. Per-project install with relative path. |
 
 ## Cross-machine sync
 
