@@ -26,7 +26,26 @@ python install.py ~/myproject
 Groups are defined in `../skills/SKILL_GROUPS.md`. Add or edit groups there;
 the install script reads them on every run.
 
-Already-installed skills are skipped (use `/claude-toolkit-pull <name>` to update one).
+## Per-skill matching
+
+For each toolkit skill, the script looks for a corresponding skill in the destination via three strategies:
+
+1. **Exact name match** (`<dest>/.claude/skills/<name>/`).
+2. **Known rename** (consults `../skills/RENAMES.md`). Catches cases like the destination still having `using-git-worktrees` while the toolkit now ships `git-using-worktrees`.
+3. **Fuzzy match** (compares YAML `description:` and folder-name token sets; threshold ~0.5 weighted Jaccard). Catches accidental description-similar skills under different names.
+
+Per match kind, the script prompts:
+- Exact + identical -> skip silently.
+- Exact + differs -> overwrite / skip.
+- Rename match -> replace-and-rename (delete old, install new) / install-alongside / skip.
+- Fuzzy match -> install-alongside / replace-and-rename / skip (also suggests adding the pair to `RENAMES.md` if confirmed).
+- No match -> install cleanly.
+
+Pass `--force-all` to auto-accept (overwrite for exact-differs, replace for rename matches, install-alongside for fuzzy matches). Use with care.
+
+## Adding a known rename
+
+Edit `../skills/RENAMES.md` and append a line `old-name -> new-name` inside the code block. The script reparses on every run.
 
 The script does NOT install hooks or rules -- those need `settings.json` merging
 and rule auto-load wiring; install them manually per the install guide at
