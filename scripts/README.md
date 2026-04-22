@@ -23,7 +23,7 @@ python install.py ~/myproject
 ./install.sh ~/myproject foundational
 ```
 
-Groups are defined in `../skills/SKILL_GROUPS.md`. Add or edit groups there;
+Groups are defined in `../.claude/skills/SKILL_GROUPS.md`. Add or edit groups there;
 the install script reads them on every run.
 
 ## Per-skill matching
@@ -31,7 +31,7 @@ the install script reads them on every run.
 For each toolkit skill, the script looks for a corresponding skill in the destination via three strategies:
 
 1. **Exact name match** (`<dest>/.claude/skills/<name>/`).
-2. **Known rename** (consults `../skills/RENAMES.md`). Catches cases like the destination still having `using-git-worktrees` while the toolkit now ships `git-using-worktrees`.
+2. **Known rename** (consults `../.claude/skills/RENAMES.md`). Catches cases like the destination still having `using-git-worktrees` while the toolkit now ships `git-using-worktrees`.
 3. **Fuzzy match** (compares YAML `description:` and folder-name token sets; threshold ~0.5 weighted Jaccard). Catches accidental description-similar skills under different names.
 
 Per match kind, the script prompts:
@@ -45,7 +45,7 @@ Pass `--force-all` to auto-accept (overwrite for exact-differs, replace for rena
 
 ## Adding a known rename
 
-Edit `../skills/RENAMES.md` and append a line `old-name -> new-name` inside the code block. The script reparses on every run.
+Edit `../.claude/skills/RENAMES.md` and append a line `old-name -> new-name` inside the code block. The script reparses on every run.
 
 The script does NOT install hooks or rules -- those need `settings.json` merging
 and rule auto-load wiring; install them manually per the install guide at

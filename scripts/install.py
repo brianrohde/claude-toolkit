@@ -6,7 +6,7 @@ Usage:
     python install.py <project-path> [target ...] [--force-all]
 
 Where each target is either:
-    - a group name from skills/SKILL_GROUPS.md (e.g., "foundational", "webdev")
+    - a group name from .claude/skills/SKILL_GROUPS.md (e.g., "foundational", "webdev")
     - a single skill folder name (e.g., "git-commit")
 
 Examples:
@@ -19,8 +19,8 @@ Examples:
 Behavior:
     - Copies skill folders byte-by-byte into <project>/.claude/skills/<name>/.
     - For each toolkit skill, looks for a match in the destination by:
-        1. Exact name (skills/<name>/).
-        2. Known rename (consults skills/RENAMES.md).
+        1. Exact name (.claude/skills/<name>/).
+        2. Known rename (consults .claude/skills/RENAMES.md).
         3. Description-field substring similarity (fuzzy).
     - If a match is found:
         - exact: shows diff, asks overwrite / skip / cancel-batch.
@@ -50,10 +50,10 @@ def find_toolkit() -> Path:
     env = os.environ.get("CLAUDE_TOOLKIT")
     if env:
         p = Path(env).expanduser().resolve()
-        if (p / "skills").is_dir():
+        if (p / ".claude" / "skills").is_dir():
             return p
     here = Path(__file__).resolve().parent.parent
-    if (here / "skills").is_dir():
+    if (here / ".claude" / "skills").is_dir():
         return here
     raise SystemExit(
         "ERROR: cannot find toolkit. Set $CLAUDE_TOOLKIT or run from inside the toolkit."
@@ -226,7 +226,7 @@ def main():
     targets = args[1:]
 
     toolkit = find_toolkit()
-    skills_dir = toolkit / "skills"
+    skills_dir = toolkit / ".claude" / "skills"
     groups = parse_groups(skills_dir / "SKILL_GROUPS.md")
     renames = parse_renames(skills_dir / "RENAMES.md")
 

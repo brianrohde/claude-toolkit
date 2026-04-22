@@ -1,4 +1,4 @@
-# checkpoint
+# checkpoint-save
 
 **Tier**: beta (newly authored 2026-04-22)
 
@@ -15,22 +15,22 @@ For users tired of typing the four triggers in sequence at every session end.
 
 ## Trigger
 
-`/checkpoint`
+`/checkpoint-save`
 
 Optional flags: `--skip-docs`, `--skip-plan`, `--dry-run`.
 
 ## Installation
 
 ```
-cp -r checkpoint/ <project>/.claude/skills/
+cp -r checkpoint-save/ <project>/.claude/skills/
 ```
 
 Or via the toolkit installer:
 ```
-python ~/claude-toolkit/scripts/install.py <project> checkpoint
+python ~/claude-toolkit/scripts/install.py <project> checkpoint-save
 ```
 
-(`checkpoint` is part of the `foundational` group, so any group install also installs it.)
+(`checkpoint-save` is part of the `foundational` group, so any group install also installs it.)
 
 ## Dependencies
 

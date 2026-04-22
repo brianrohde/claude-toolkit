@@ -9,7 +9,7 @@ Components flow **library -> project** via copy. Never symlink, never auto-sync.
 ## Hooks
 
 ```
-cp claude-toolkit/hooks/<hook-name>/<hook-name>.py <project>/.claude/hooks/<hook-name>.py
+cp claude-toolkit/.claude/hooks/<hook-name>/<hook-name>.py <project>/.claude/hooks/<hook-name>.py
 ```
 
 Then merge `<hook-name>/settings.snippet.json` into `<project>/.claude/settings.json` (the snippet uses a **relative path** -- never replace it with an absolute path).
@@ -19,7 +19,7 @@ Commit both the script and the settings.json change.
 ## Skills
 
 ```
-cp -r claude-toolkit/skills/<skill-name>/ <project>/.claude/skills/
+cp -r claude-toolkit/.claude/skills/<skill-name>/ <project>/.claude/skills/
 ```
 
 Confirm the YAML `name:` field inside `SKILL.md` matches the folder name. (All toolkit skills should already be correct.)
@@ -29,7 +29,7 @@ Commit the folder.
 ## Rules
 
 ```
-cp claude-toolkit/rules/<rule-name>/<rule-name>.md <project>/.claude/rules/<rule-name>.md
+cp claude-toolkit/.claude/rules/<rule-name>/<rule-name>.md <project>/.claude/rules/<rule-name>.md
 ```
 
 Some rules auto-load (referenced from `CLAUDE.md`); others are referenced by trigger phrase. Check the rule's README for activation pattern.

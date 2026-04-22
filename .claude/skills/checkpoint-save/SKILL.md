@@ -1,10 +1,10 @@
 ---
-name: checkpoint
-description: This skill should be used when the user says "checkpoint", "/checkpoint", "round up the session", "wrap up and commit", or wants to run the full end-of-session sweep in one command. Aggregates four skills in sequence: /docs-update-all (refresh docs), /plan-update-all (log plan outcomes), /git-draft-commit (draft a commit message), /git-push (stage + commit + push). One command instead of four.
+name: checkpoint-save
+description: This skill should be used when the user says "checkpoint-save", "/checkpoint-save", "round up the session", "wrap up and commit", or wants to run the full end-of-session sweep in one command. Aggregates four skills in sequence: /docs-update-all (refresh docs), /plan-update-all (log plan outcomes), /git-draft-commit (draft a commit message), /git-push (stage + commit + push). One command instead of four.
 version: 0.1.0
 ---
 
-# checkpoint
+# checkpoint-save
 
 ## Purpose
 
@@ -18,7 +18,7 @@ The default sequence:
 
 ## Trigger
 
-`/checkpoint` (no arguments)
+`/checkpoint-save` (no arguments)
 
 Optional flags in the user prompt:
 - `--skip-docs` -- skip step 1 (docs already current).
@@ -47,7 +47,7 @@ If `--dry-run` was passed, stop here and report the drafted message + what would
 ### Step 5: Report
 End with a tight one-line summary:
 ```
-checkpoint: docs <updated|skipped>, plan <logged|skipped>, commit <hash> pushed to <branch>
+checkpoint-save: docs <updated|skipped>, plan <logged|skipped>, commit <hash> pushed to <branch>
 ```
 
 If any step fails:
@@ -74,6 +74,6 @@ Per-step pass-through of each child skill's output, plus the final one-line summ
 ## Failure modes
 
 - **Missing child skill**: surface "skill X not found"; suggest `/claude-toolkit-pull X` for toolkit-managed skills, or "ensure /git-push is installed globally" for the push step.
-- **Uncommitted state from prior session**: `/git-push` will surface; the user should resolve before re-running checkpoint.
+- **Uncommitted state from prior session**: `/git-push` will surface; the user should resolve before re-running checkpoint-save.
 - **Push fails (no auth, branch protection, etc.)**: surface the error; the local commit stands; user can push manually.
-- **Drafted commit message looks wrong**: rerun `/git-draft-commit` standalone to refine, then `/git-push` separately. Don't blindly re-run /checkpoint -- it would draft a fresh message from a now-stale context.
+- **Drafted commit message looks wrong**: rerun `/git-draft-commit` standalone to refine, then `/git-push` separately. Don't blindly re-run /checkpoint-save -- it would draft a fresh message from a now-stale context.
