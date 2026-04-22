@@ -66,6 +66,10 @@ Don't reach for `experimental` components in a new project without reviewing the
 |---|---|---|---|
 | [branch_guard](hooks/branch_guard/) | hook | beta | UserPromptSubmit hook: suggests a feature branch when on `main`, confirms branch otherwise. |
 | [check_file_edit](hooks/check_file_edit/) | hook | beta | PreToolUse hook: blocks Edit/Write on OneDrive .py files (EEXIST/byte-corruption guard) and any .env file. |
+| [claude-toolkit-diff](skills/claude-toolkit-diff/) | skill | beta | Compare overlapping components between project and toolkit; report which side is newer/diverged. Read-only. |
+| [claude-toolkit-new-skill](skills/claude-toolkit-new-skill/) | skill | beta | First-time promotion of a project skill to the toolkit; scrubs project-specific refs, commits, pushes. |
+| [claude-toolkit-suggestion](skills/claude-toolkit-suggestion/) | skill | beta | Recommend toolkit components that fit the current project's tech stack. Read-only. |
+| [claude-toolkit-update](skills/claude-toolkit-update/) | skill | beta | Pull canonical version of a toolkit component into a project; opposite of claude-toolkit-new-skill. |
 | [deploy-to-vercel](skills/deploy-to-vercel/) | skill | beta | Deploy applications and websites to Vercel via CLI. |
 | [docs-update-all](skills/docs-update-all/) | skill | beta | Update all documentation in a session sweep. |
 | [errors-log](skills/errors-log/) | skill | beta | Scan session for tool failures and append to `.claude/logs/tooling-issues.jsonl`. |
