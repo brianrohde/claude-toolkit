@@ -37,4 +37,5 @@ Hard-coded absolute paths in **global** settings caused real breakage (see PTA p
 
 | Hook | Tier | Purpose |
 |---|---|---|
-| [branch_guard](branch_guard/) | beta | Suggest a feature branch when prompts arrive on `main`; pass through otherwise |
+| [branch_guard](branch_guard/) | beta | UserPromptSubmit: suggest a feature branch when on `main`; pass through otherwise |
+| [check_file_edit](check_file_edit/) | beta | PreToolUse: block Edit/Write on OneDrive .py files (EEXIST/byte-corruption guard) and any .env file |
