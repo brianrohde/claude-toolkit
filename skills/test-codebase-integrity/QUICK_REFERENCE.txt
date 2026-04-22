@@ -1,0 +1,110 @@
+================================================================================
+                    TEST-CODEBASE-INTEGRITY SKILL
+                        Quick Reference Card
+================================================================================
+
+TRIGGER PHRASES:
+  - "test codebase integrity"
+  - "validate system integrity"  
+  - "run full integration tests"
+  - "check codebase health"
+  - "test agents" / "test forecasting" / "test coordination" / "test data_models"
+  - "ensure system stability"
+
+USAGE PATTERN:
+  User: "test codebase integrity"
+  Skill: "Which module? (all / agents / forecasting / coordination / data_models)"
+  User: "all" (or specific module)
+  Skill: Runs tests, shows results, GO/NO-GO decision
+
+OUTPUT FORMAT:
+  Test 1: Name                           ... [PASS] or [FAIL]
+  Test 2: Name                           ... [PASS] or [FAIL]
+  ...
+  Result: X/10 PASS
+  Decision: GO FOR SYNC or NO-GO FOR SYNC
+
+MODULES & TESTS:
+  
+  agents (Tests 1, 3, 10):
+    - State & Coordinator Import
+    - Agent Imports
+    - Full Integration
+  
+  coordination (Tests 2, 4, 9):
+    - Config Loading
+    - Routing Logic
+    - State Transitions
+  
+  forecasting (Tests 6, 7, 8):
+    - Feature Engineering
+    - Metric Functions
+    - Ridge Log Clipping
+  
+  data_models (Test 5):
+    - Data Models
+  
+  all (Tests 1-10):
+    - Complete validation (recommended before sync)
+
+WHEN TO USE:
+
+  Before pushing commits:
+    "test codebase integrity"
+    → Run full suite, confirm GO/NO-GO
+
+  After refactoring agents:
+    "test agents"
+    → Quick check on import chain + instantiation
+
+  After changing features:
+    "validate forecasting"
+    → Test lag_12, price_per_unit, metrics
+
+  Debugging a failure:
+    "check codebase health --verbose"
+    → Shows detailed error messages + remediation steps
+
+LOCATION:
+  .claude/skills/test-codebase-integrity/
+  ├── SKILL.md                    (Full skill definition)
+  ├── README.md                   (Quick start guide)
+  ├── ITERATION_NOTES.md          (How to customize)
+  ├── QUICK_REFERENCE.txt         (This file)
+  ├── scripts/test_runner.py      (Test engine)
+  └── evals/evals.json            (Test cases)
+
+NEXT STEPS:
+
+  1. Read SKILL.md to understand what tests are available
+  2. Update test_runner.py imports to match your module structure
+  3. Run: "test agents" to verify it works
+  4. Use before every sync: "test codebase integrity"
+
+CUSTOMIZATION:
+
+  Need to adjust module imports?
+    → Edit: .claude/skills/test-codebase-integrity/scripts/test_runner.py
+    → Lines 220-380: Update imports to match your codebase
+    → Lines 500-650: Add your test logic
+
+  Want to add more tests?
+    → Add test function to TEST_FUNCTIONS dict
+    → Add metadata to TEST_METADATA
+    → Update SKILL.md with new test documentation
+
+TROUBLESHOOTING:
+
+  "ModuleNotFoundError" in test output?
+    → Expected - need to customize module paths
+    → See ITERATION_NOTES.md for instructions
+
+  Tests failing but code works locally?
+    → Check Python path: which python
+    → Verify venv: source .venv/bin/activate
+    → Try with --verbose: "test agents --verbose"
+
+  Want to run manually without Claude?
+    → python .claude/skills/test-codebase-integrity/scripts/test_runner.py --module all
+
+================================================================================

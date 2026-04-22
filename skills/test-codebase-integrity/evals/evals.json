@@ -1,0 +1,60 @@
+{
+  "skill_name": "test-codebase-integrity",
+  "evals": [
+    {
+      "id": 1,
+      "eval_name": "full-suite-validation",
+      "prompt": "Before I push these 15 commits to the colleague's branch, I need to ensure the entire codebase is stable. Can you test codebase integrity for me?",
+      "expected_output": "Comprehensive validation report with all 10 tests, showing pass/fail status, timing, and GO/NO-GO decision for sync",
+      "files": [],
+      "assertions": [
+        {
+          "name": "outputs_structured_report",
+          "description": "Output contains clear test results table with pass/fail for each of 10 tests"
+        },
+        {
+          "name": "includes_timing",
+          "description": "Output shows total execution time and time-per-test"
+        },
+        {
+          "name": "includes_decision",
+          "description": "Output includes explicit GO/NO-GO decision ('ready to sync' or 'fix issues before pushing')"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "eval_name": "agent-module-only",
+      "prompt": "I just refactored the agent import structure. Can you test just the agents module to make sure I didn't break anything?",
+      "expected_output": "Agent-specific test results (tests 1, 3, 10) with import validation and remediation steps if failures found",
+      "files": [],
+      "assertions": [
+        {
+          "name": "filters_to_agents",
+          "description": "Output focuses on agent-related tests, not forecasting/metrics tests"
+        },
+        {
+          "name": "includes_remediation",
+          "description": "If any agent test fails, output provides specific remediation steps"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "eval_name": "forecasting-module-validation",
+      "prompt": "I changed the feature engineering logic for lag_12 and price_per_unit. Validate the forecasting module please.",
+      "expected_output": "Forecasting-specific tests (6, 7, 8) showing feature engineering, metrics, and numerical stability validation",
+      "files": [],
+      "assertions": [
+        {
+          "name": "targets_forecasting",
+          "description": "Output shows only forecasting module tests, skipping agent and coordination tests"
+        },
+        {
+          "name": "includes_feature_checks",
+          "description": "Output explicitly validates lag_12 and price_per_unit computation"
+        }
+      ]
+    }
+  ]
+}
