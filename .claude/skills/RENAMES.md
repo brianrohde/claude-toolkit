@@ -29,6 +29,7 @@ update_all_docs -> docs-update-all
 claude-toolkit-update -> claude-toolkit-pull
 claude-toolkit-new-skill -> claude-toolkit-push
 skill-update-workflow -> claude-toolkit-push
+checkpoint -> checkpoint-save
 ```
 
 ## How it's used
