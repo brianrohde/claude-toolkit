@@ -66,30 +66,48 @@ Show a structured diff between project copy and toolkit copy:
 
 Pause for explicit user confirmation. Default is interactive -- only auto-proceed if the user passed a `--force` flag in their prompt.
 
-### Step 6: Copy
+### Step 6: Normalize line endings (CRLF -> LF)
+
+Git stores canonical toolkit files as LF. Windows editors and the Claude Code Write tool often default to CRLF. If a CRLF file is copied into the toolkit, `git diff` shows EVERY LINE as changed, making the commit diff unreadable even when only a few real lines differ.
+
+**Before copying, normalize to LF.** Use this byte-level pattern (Windows/OneDrive safe):
+
+```python
+def normalize_to_lf(src: Path, dst: Path):
+    data = src.read_bytes()
+    data = data.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    dst.write_bytes(data)
+```
+
+Apply to every text file in the component (SKILL.md, README.md, scripts, templates). Do NOT normalize binary files (images, compiled artifacts).
+
+After copy, verify with `git diff --stat` in the destination repo. Line changes should match the actual semantic delta; if they match full-file size, CRLF leaked through -- re-run with normalization.
+
+### Step 7: Copy
 Use the byte-level temp-script copy pattern (Windows/OneDrive safe):
 1. Write a temp `.py` script.
-2. Copy source tree to `<toolkit>/<type>/<name>/`.
+2. Copy source tree to `<toolkit>/<type>/<name>/`, applying the Step 6 LF normalization to every text file.
 3. For NEW mode, apply Step 4 rewrites to destination.
 4. For UPDATE mode, copy source as-is (rewrites should already be in source if needed).
 
-### Step 7: Write / refresh README (NEW mode only)
+### Step 8: Write / refresh README (NEW mode only)
 Create `<toolkit>/<type>/<name>/README.md` with title, tier (`beta`), generic purpose, install command, provenance.
 
 For UPDATE mode, leave the existing toolkit README in place unless the user explicitly asks to refresh it.
 
-### Step 8: Update toolkit indexes (NEW mode only)
+### Step 9: Update toolkit indexes (NEW mode only)
 Add a row to root `claude-toolkit/README.md` and `<toolkit>/<type>/README.md`.
 
 For UPDATE mode, only refresh the index if the description changed materially.
 
-### Step 9: Commit and push
+### Step 10: Commit and push
 In the toolkit directory:
 - `git add` the affected paths.
 - Commit message: `feat(<type>): add <name> -- promoted from <project>` (NEW) or `feat(<type>): update <name> from <project>` (UPDATE).
 - `git push origin main`.
 
-### Step 10: Suggest follow-up
+### Step 11: Suggest follow-up
 - NEW: skill is now at tier `beta`. Bump to `stable` after second-project reuse. Other projects can install via `/claude-toolkit-pull <name>`.
 - UPDATE: other projects with this skill installed should run `/claude-toolkit-pull <name>` to receive the update; or run `/claude-toolkit-diff` first to check for local edits.
 
@@ -110,3 +128,4 @@ Report:
 - **Push fails (no auth, no remote)**: leave the commit local; tell the user to push manually.
 - **UPDATE mode + toolkit has unmerged commits**: halt; recommend `/claude-toolkit-diff` to reconcile first.
 - **NEW mode + user wants to keep project-specific refs**: warn that the toolkit copy will not be project-agnostic; require explicit override.
+- **Noisy diff (every line changed)**: CRLF line endings leaked into the copy. Re-run with Step 6 (normalize to LF) before committing. See `.claude/rules/line-endings.md`.

@@ -56,13 +56,33 @@ This skill primarily delegates to `scripts/install.py` in the toolkit, which imp
 - Deduplicate while preserving order.
 - If the user passed nothing, list groups interactively.
 
-### Step 4: Per-skill matching (handled by install.py)
+### Step 4: Normalize line endings (CRLF -> LF)
+
+Git stores canonical toolkit files as LF. Windows editors and the Claude Code Write tool often default to CRLF. If a CRLF file is copied into the toolkit, `git diff` shows EVERY LINE as changed, making the commit diff unreadable even when only a few real lines differ.
+
+**Before copying, normalize to LF.** Use this byte-level pattern (Windows/OneDrive safe):
+
+```python
+def normalize_to_lf(src: Path, dst: Path):
+    data = src.read_bytes()
+    data = data.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    dst.write_bytes(data)
+```
+
+Apply to every text file in the component (SKILL.md, README.md, scripts, templates). Do NOT normalize binary files (images, compiled artifacts).
+
+After copy, verify with `git diff --stat` in the destination repo. Line changes should match the actual semantic delta; if they match full-file size, CRLF leaked through -- re-run with normalization.
+
+`install.py` MUST honor this contract when writing destination files; the skill should verify destination files are LF after install completes (or re-normalize in-place before the user stages the change).
+
+### Step 5: Per-skill matching (handled by install.py)
 For each toolkit skill `<name>`:
 1. **Exact match**: `<destination>/.claude/skills/<name>/` exists.
 2. **Rename match**: consult `<toolkit>/skills/RENAMES.md` for any `old -> <name>` pair where `<destination>/.claude/skills/<old>/` exists.
 3. **Fuzzy match**: compare YAML `description:` fields and folder-name token sets across all destination skills; treat as a candidate match if Jaccard similarity (0.4 * name + 0.6 * description) >= 0.5.
 
-### Step 5: Per-skill prompt
+### Step 6: Per-skill prompt
 For each skill the script categorizes:
 - **No match** -> install cleanly.
 - **Exact match, identical** -> skip (already in sync).
@@ -72,7 +92,7 @@ For each skill the script categorizes:
 
 `--force-all` auto-accepts: overwrite for exact-differs, replace for rename matches, install-alongside for fuzzy matches.
 
-### Step 6: Report + stage in git
+### Step 7: Report + stage in git
 After install.py finishes, surface its summary:
 - Added (clean) / Replaced (exact) / Renamed-replaced (rename or fuzzy) / Kept alongside / Skipped / Failed.
 - For renamed-replaced, list the `old -> new` pairs explicitly.
@@ -123,3 +143,4 @@ Surface the install.py summary verbatim plus the suggested `git status` / `git a
 - **Unknown target (not a group, not a skill)**: warn but continue with valid targets.
 - **install.py errors**: surface its stderr.
 - **Hook target without settings.json merge**: this skill installs SKILLS only. To install a hook, copy the folder manually and merge `settings.snippet.json` -- see `docs/guides/installing-components.md`.
+- **Noisy diff (every line changed)**: CRLF line endings leaked into the copy. Re-run with Step 4 (normalize to LF) before committing. See `.claude/rules/line-endings.md`.
