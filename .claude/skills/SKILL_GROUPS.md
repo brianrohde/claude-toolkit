@@ -15,6 +15,7 @@ auditing. Install these in any new Claude Code project.
 - claude-toolkit-push
 - claude-toolkit-suggestion
 - claude-toolkit-diff
+- claude-toolkit-sync-status
 - git-commit
 - git-draft-commit
 - git-using-worktrees
@@ -28,6 +29,12 @@ auditing. Install these in any new Claude Code project.
 - errors-log
 - docs-update-all
 - checkpoint-save
+- command-development
+- hook-development
+- parallel-orchestration
+- repo-integration-analyzer
+- skill-audit
+- git-push
 
 ## standup
 

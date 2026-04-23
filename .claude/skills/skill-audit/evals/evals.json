@@ -1,0 +1,40 @@
+{
+  "skill_name": "skill-audit",
+  "evals": [
+    {
+      "id": 1,
+      "name": "basic-project-audit",
+      "prompt": "audit my skills in the current project pta-cbp-parser vs global",
+      "expected_output": "Matrix showing all skills in project and global directories, with availability status (DUPLICATED, SHARED, GLOBAL_ONLY, PROJECT_ONLY), summary counts, and migration recommendations",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "multi-project-comparison",
+      "prompt": "Compare skills across multiple projects. I have project A at ~/test-project-a and project B at ~/test-project-b. Show me what skills each has and what's missing.",
+      "expected_output": "Matrix with both projects listed, showing skill distribution and gaps. Recommendations for which project-specific skills should be promoted or shared.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "duplicate-detection",
+      "prompt": "Find duplicate or very similar skills in my entire skill ecosystem. I suspect some project-specific skills have similar descriptions to global ones.",
+      "expected_output": "Report listing similar skills with similarity percentages, descriptions, and recommendations for consolidation or archival",
+      "files": []
+    },
+    {
+      "id": 4,
+      "name": "domain-filtering",
+      "prompt": "Audit testing-related skills in my ecosystem. I want to see which testing skills I have globally and which are in my pta-cbp-parser project.",
+      "expected_output": "Filtered matrix showing only testing-related skills, with their locations and usage status",
+      "files": []
+    },
+    {
+      "id": 5,
+      "name": "gap-analysis",
+      "prompt": "I'm setting up a new project. Show me which global skills I have available and which project-specific skills from pta-cbp-parser might be relevant to copy.",
+      "expected_output": "Summary of global skills with descriptions, plus recommendations for which project skills are general-purpose enough to reuse",
+      "files": []
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "skill_name": "git-push",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I've made some changes to the docs and the skill files. Run /draft_commit first to generate a message, then use /git-push to complete the workflow.",
+      "expected_output": "Successfully stages all modified files, creates commit with the drafted message, and pushes to the current branch with confirmation output.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "I just made changes to three files. Can you stage them all, commit with 'fix: update error handling', and push?",
+      "expected_output": "All three files are staged, commit is created with the provided message, and push completes successfully to origin/branch.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "The working directory is clean. What happens if I try to run /git-push?",
+      "expected_output": "Skill reports that there are no files to stage and exits gracefully without attempting a commit.",
+      "files": []
+    }
+  ]
+}

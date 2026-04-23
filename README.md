@@ -69,11 +69,18 @@ Don't reach for `experimental` components in a new project without reviewing the
 |---|---|---|---|
 | [branch_guard](.claude/hooks/branch_guard/) | hook | beta | UserPromptSubmit hook: suggests a feature branch when on `main`, confirms branch otherwise. |
 | [check_file_edit](.claude/hooks/check_file_edit/) | hook | beta | PreToolUse hook: blocks Edit/Write on OneDrive .py files (EEXIST/byte-corruption guard) and any .env file. |
-| [checkpoint](.claude/skills/checkpoint/) | skill | beta | End-of-session aggregator: runs /docs-update-all, /plan-update-all, /git-draft-commit, /git-push in sequence. |
+| [checkpoint-save](.claude/skills/checkpoint-save/) | skill | beta | End-of-session aggregator: runs /docs-update-all, /plan-update-all, /git-draft-commit, /git-push in sequence. |
 | [claude-toolkit-diff](.claude/skills/claude-toolkit-diff/) | skill | beta | Compare overlapping components between project and toolkit; report which side is newer/diverged. Read-only. |
 | [claude-toolkit-push](.claude/skills/claude-toolkit-push/) | skill | beta | Promote project component to toolkit (auto-detects new vs update; diffs and confirms before overwrite). |
 | [claude-toolkit-suggestion](.claude/skills/claude-toolkit-suggestion/) | skill | beta | Recommend toolkit components that fit the current project's tech stack. Read-only. |
 | [claude-toolkit-pull](.claude/skills/claude-toolkit-pull/) | skill | beta | Pull canonical version of a toolkit component into a project; opposite of claude-toolkit-push. |
+| [claude-toolkit-sync-status](.claude/skills/claude-toolkit-sync-status/) | skill | beta | Multi-repo read-only sync dashboard: accepts N repo paths, reports IN_SYNC / NEWER / DIVERGED per subtree. |
+| [command-development](.claude/skills/command-development/) | skill | beta | Reference guide for authoring Claude Code slash commands (frontmatter, args, file refs, bash blocks). |
+| [git-push](.claude/skills/git-push/) | skill | beta | Stage + commit + push in one step. Complements /git-commit (which only stages + commits). |
+| [hook-development](.claude/skills/hook-development/) | skill | beta | Reference guide for authoring Claude Code hooks across all event types. |
+| [parallel-orchestration](.claude/skills/parallel-orchestration/) | skill | beta | Run 2-5 subagents in parallel and synthesize results; ~50% wall-time savings vs sequential. |
+| [repo-integration-analyzer](.claude/skills/repo-integration-analyzer/) | skill | beta | Analyze multiple repos for reusable modules and integration paths. Produces structured migration docs. |
+| [skill-audit](.claude/skills/skill-audit/) | skill | beta | Comprehensive audit of skill ecosystem across global + project installations; duplicate detection via similarity. |
 | [deploy-to-vercel](.claude/skills/deploy-to-vercel/) | skill | beta | Deploy applications and websites to Vercel via CLI. |
 | [docs-update-all](.claude/skills/docs-update-all/) | skill | beta | Update all documentation in a session sweep. |
 | [errors-log](.claude/skills/errors-log/) | skill | beta | Scan session for tool failures and append to `.claude/logs/tooling-issues.jsonl`. |
