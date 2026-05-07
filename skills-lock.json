@@ -1,6 +1,18 @@
 {
   "version": 1,
   "skills": {
+    "academic-writing": {
+      "source": "jamditis/claude-skills-journalism",
+      "sourceType": "github",
+      "skillPath": "academic-writing/SKILL.md",
+      "computedHash": "5f65557e34f32ba47f17583972d8aa4cd6acea08d3061c58947c5301818e5dec"
+    },
+    "article-writing": {
+      "source": "affaan-m/everything-claude-code",
+      "sourceType": "github",
+      "skillPath": "skills/article-writing/SKILL.md",
+      "computedHash": "817681512514c182560c980986b1400f7c9951c36271fd6870c7c376d0ab3a99"
+    },
     "create-readme": {
       "source": "github/awesome-copilot",
       "sourceType": "github",
