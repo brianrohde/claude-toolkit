@@ -24,6 +24,12 @@ Invoke when:
 
 ---
 
+## Default pattern reminder
+
+Most work in this repo uses **Pattern A** (sub-agent `isolation: "worktree"`) — when the sub-agent completes, the harness automatically cleans up the worktree if no changes were made, or returns the worktree path + branch for manual merge. This skill (`/git-worktree-merge`) is for **Pattern B** only — merging a worktree branch you created manually with `/git-using-worktrees`. If you're looking at a sub-agent worktree that wasn't auto-cleaned, the same workflow applies.
+
+---
+
 ## Algorithm
 
 ### Step 0 — Branch and worktree verification
@@ -34,7 +40,7 @@ git worktree list
 git status --short
 ```
 
-**Case A — In a worktree** (path contains `.cc/worktrees/`):
+**Case A — In a worktree** (path contains `worktrees/`):
 - Confirm branch name matches worktree
 - Branch is isolated by design → safe to merge locally or via PR
 
@@ -58,7 +64,7 @@ git diff --name-only main..<current-branch>
 Display to user:
 - Number of files changed
 - Number of insertions/deletions
-- List of files (grouped by area: thesis/, data/, docs/, config/, .claude/)
+- List of files (grouped by area: src/, data/, docs/, config/, .claude/)
 
 Flag if spans multiple unrelated areas.
 
@@ -89,12 +95,10 @@ Overlapping files:
 Recommendation: Follow the RECONCILE WORKFLOW
   1. Keep both PRs as DRAFT
   2. Create a reconcile worktree:
-     git worktree add .cc/worktrees/reconcile cc/YYYYMMDD-HHMM-initials/reconcile-<topic>
+     git worktree add worktrees/reconcile cc/YYYYMMDD-HHMM[-initials]/reconcile-<topic>
   3. Merge both branches in reconcile, resolve conflicts
   4. Open PR titled "Reconcile: <branch-a> + <branch-b>"
   5. Only merge the reconcile PR to main (not the individual branches)
-
-See: docs/reference/git-worktrees-and-parallel-sessions.md#reconcile-workflow
 ```
 
 **If no overlap**: Proceed to Step 3.
@@ -151,7 +155,7 @@ Next steps:
   [ ] Review the PR diff in GitHub UI
   [ ] When ready to merge, run: gh pr ready
   [ ] Then merge via GitHub UI (use "Create a merge commit" option)
-  [ ] After merge, run: git worktree remove .cc/worktrees/<name>
+  [ ] After merge, run: git worktree remove worktrees/<name>
 ```
 
 ---
@@ -178,7 +182,7 @@ git merge --no-ff -m "<merge commit message>" main
 ```
 Merge branch '<branch-name>' into main
 
-Session-ID: cc-<YYYYMMDD-HHMM-initials>
+Session-ID: cc-<YYYYMMDD-HHMM[-initials]>  # initials optional in this project
 Merged-by: <operator>
 Worktree: <path>
 Base-Commit: <SHA>
@@ -188,18 +192,11 @@ Base-Commit: <SHA>
 
 ### Step 5 — Health gate validation (local merge only)
 
-**If local merge was executed:**
+Skip this step unless `workspace-enforce` is installed in the project. If absent, rely on the PR review in step 4A instead.
 
-```bash
-python .claude/skills/workspace-enforce/scripts/enforce_runner.py --root .
-```
-
-**Interpret result:**
-- Exit code `0` = PASS → Merge is valid
-- Exit code `1` = FAIL → Violations present
-  - List violations
-  - Ask: Proceed anyway (mark as waived) or rollback merge?
-  - Provide: `git reset --hard HEAD~1` to undo
+If `workspace-enforce` is present, invoke it per its own SKILL.md. Interpret result:
+- PASS → Merge is valid
+- FAIL → List violations; ask user: proceed (waive) or rollback with `git reset --hard HEAD~1`
 
 ---
 
@@ -233,7 +230,7 @@ Offer cleanup options:
 Merge complete! Cleanup options:
 
   [1] Remove this worktree now
-       → git worktree remove .cc/worktrees/<name>
+       → git worktree remove worktrees/<name>
   
   [2] Keep worktree for further work
        → (branch stays alive for continued feature work)
@@ -243,13 +240,13 @@ Merge complete! Cleanup options:
 
 **If [1]**: Run cleanup and confirm:
 ```bash
-git worktree remove .cc/worktrees/<name>
+git worktree remove worktrees/<name>
 git worktree list  # verify removed
 ```
 
 Output:
 ```
-✅ Worktree removed: .cc/worktrees/<name>
+✅ Worktree removed: worktrees/<name>
 
 Branch '<branch-name>' remains in git history and on GitHub.
 To fully delete the remote branch:
@@ -293,14 +290,14 @@ Next action:
   Lines: +47, -12
   
   .claude/skills/git-worktree-merge/SKILL.md (new)
-  thesis/thesis-writing/sections-drafts/phase-2-design.md (modified)
-  docs/dev/repository_map.md (modified)
+  src/extract/submitter_boundary.py (modified)
+  docs/repository-map.md (modified)
 
 ❌ No overlap detected with other open branches.
 
-Ready to merge feat/phase2-merge-skill into main.
+Ready to merge feat/submitter-boundary-phase2 into main.
 
-✅ Branch pushed to origin/feat/phase2-merge-skill
+✅ Branch pushed to origin/feat/submitter-boundary-phase2
 
 PR created: https://github.com/user/repo/pull/42
 
@@ -308,7 +305,7 @@ Next steps:
   1. Review PR diff in GitHub
   2. Run: gh pr ready (when ready to merge)
   3. Click "Merge" in GitHub UI (use "Create a merge commit")
-  4. Run: git worktree remove .cc/worktrees/phase2-merge-skill
+  4. Run: git worktree remove worktrees/submitter-boundary-phase2
 ```
 
 ### Example 2: Overlap detected, reconcile workflow suggested
@@ -322,19 +319,17 @@ Overlapping files:
 
 Recommendation: Follow RECONCILE WORKFLOW
   1. Keep both PRs as DRAFT
-  2. git worktree add .cc/worktrees/reconcile cc/20260420-1530-br/reconcile-merge-tooling
-  3. cd .cc/worktrees/reconcile
-  4. git merge origin/feat/phase2-merge-skill
+  2. git worktree add worktrees/reconcile cc/20260420-1530/reconcile-regex-tooling
+  3. cd worktrees/reconcile
+  4. git merge origin/feat/regex-fix-batch
   5. git merge origin/config/tooling-setup
   6. [Resolve conflicts manually in .claude/settings.json]
   7. git add .claude/settings.json
-  8. git commit -m "Reconcile: merge-skill + tooling-setup"
-  9. git push -u origin cc/20260420-1530-br/reconcile-merge-tooling
-  10. gh pr create --draft --title "Reconcile: merge-skill + tooling-setup"
+  8. git commit -m "Reconcile: regex-fix-batch + tooling-setup"
+  9. git push -u origin cc/20260420-1530/reconcile-regex-tooling
+  10. gh pr create --draft --title "Reconcile: regex-fix-batch + tooling-setup"
 
 Then merge ONLY the reconcile PR to main.
-
-See: docs/reference/git-worktrees-and-parallel-sessions.md#reconcile-workflow
 ```
 
 ---
@@ -344,7 +339,4 @@ See: docs/reference/git-worktrees-and-parallel-sessions.md#reconcile-workflow
 - Worktree setup: `/git-worktrees`
 - Commit message generation: `/git-draft-commit`
 - Single-commit staging: `/git-commit`
-- Branch strategy: `.claude/rules/trigger-branch-strategy.md`
-- Full worktree guide: `docs/reference/git-worktrees-and-parallel-sessions.md`
-- GitHub branch strategy: `docs/reference/git-branch-strategy.md`
-- Health gate validation: `.claude/skills/workspace-enforce/SKILL.md`
+- Health gate validation: `.claude/skills/workspace-enforce/SKILL.md` (if installed)

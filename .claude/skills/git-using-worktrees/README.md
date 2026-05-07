@@ -4,7 +4,7 @@
 
 ## Purpose
 
-Use when starting a new Claude Code session that needs isolation — creates a git worktree under .cc/worktrees/ with the project branch naming convention, safety checks, and branch mismatch detection. Pairs with /git-draft-commit for cleanup and audit.
+Use when starting a new Claude Code session that needs isolation — creates a git worktree under worktrees/ with the project branch naming convention, safety checks, and branch mismatch detection. Pairs with /git-draft-commit for cleanup and audit.
 
 ## Installation
 
